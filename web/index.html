@@ -21,7 +21,6 @@
     <button id="loadVegetables">Load Vegetables</button>
   </div>
   <div id="output"></div>
-
   <div class="section">
     <h2>Fruits (FastAPI)</h2>
     <table id="fruitTable">
@@ -29,7 +28,6 @@
       <tbody></tbody>
     </table>
   </div>
-
   <div class="section">
     <h2>Vegetables (Java)</h2>
     <table id="vegTable">
@@ -37,20 +35,16 @@
       <tbody></tbody>
     </table>
   </div>
-
   <script>
-    const FRUITS_API = "http://localhost:9090/fruits";      // FastAPI
-    const VEGETABLES_API = "http://localhost:8080/vegetables"; // Java Spring
-
+    const FRUITS_API = "http://localhost:9090/fruits";
+    const VEGETABLES_API = "http://localhost:8080/vegetables";
     const out = document.getElementById("output");
-
     async function load(url, tableSelector, key) {
       out.textContent = "Loading...";
       try {
         const res = await fetch(url);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
-
         const items = data[key] || [];
         const tbody = document.querySelector(`${tableSelector} tbody`);
         tbody.innerHTML = "";
@@ -61,17 +55,14 @@
           tr.innerHTML = `<td>${item.name}</td><td>${price}</td>`;
           tbody.appendChild(tr);
         });
-
         out.textContent = "Loaded ✓";
       } catch (err) {
         out.textContent = `Error: ${err.message}`;
         console.error(err);
       }
     }
-
     document.getElementById("loadFruits").onclick = () =>
       load(FRUITS_API, "#fruitTable", "fruits");
-
     document.getElementById("loadVegetables").onclick = () =>
       load(VEGETABLES_API, "#vegTable", "vegetables");
   </script>
